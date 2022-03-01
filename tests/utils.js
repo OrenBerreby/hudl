@@ -1,10 +1,11 @@
-const webdriver = require("selenium-webdriver");
-const driver = new webdriver.Builder().forBrowser("chrome").build();
-
 // exports.getElement = getElement;
 
-async function fillInput(email, selector) {
-  await driver.findElement(webdriver.By.id(selector)).sendKeys(email);
-}
+// async function fillInput(email, selector) {
+//   await driver.findElement(webdriver.By.id(selector)).sendKeys(email);
+// }
 
-exports.fillInput = fillInput;
+// export const getElement = async (selector: string): Promise<void> => {
+//   await driver.findElement(webdriver.By.id(selector));
+// };
+
+//exports.fillInput = fillInput;
