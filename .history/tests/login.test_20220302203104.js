@@ -16,8 +16,6 @@ const {
   checkElementIsDisabled,
   checkElementState,
   checkElementVisibility,
-  getElementText,
-  checkElementText,
 } = require("./utilities");
 
 const loginUrl = "https://www.hudl.com/login";
@@ -59,19 +57,18 @@ describe("Test logging into Hudl", () => {
     console.log("a");
 
     // Check error container was triggered
-    await checkElementVisibility(
-      driver,
-      "div.login-error.fade-in-expand",
-      "visible"
-    );
+    await checkElementVisibility(driver, "div.login-error.fade-in-expand");
 
     console.log("b");
 
-    await checkElementText(
-      driver,
-      "div.login-error.fade-in-expand p",
-      "We didn't recognize that email and/or password. Need help?"
-    );
+    // const errorContainer = await driver.findElements(
+    //   By.css("div.login-error.fade-in-expand")
+    // );
+    //await driver.wait(until.elementIsVisible(errorContainer));
+    // elementTextIs(
+    //   errorContainer,
+    //   "We didn't recognize that email and/or password. "
+    // );
 
     // Check need help button
 

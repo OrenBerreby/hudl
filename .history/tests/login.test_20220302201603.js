@@ -2,6 +2,7 @@ const { expect } = require("@jest/globals");
 const { By } = require("selenium-webdriver");
 const { until } = require("selenium-webdriver");
 const webdriver = require("selenium-webdriver");
+const { Driver } = require("selenium-webdriver/chrome");
 const {
   titleContains,
   elementIsVisible,
@@ -13,11 +14,6 @@ const {
   setMobileScreenSize,
   login,
   checkElementIsVisible,
-  checkElementIsDisabled,
-  checkElementState,
-  checkElementVisibility,
-  getElementText,
-  checkElementText,
 } = require("./utilities");
 
 const loginUrl = "https://www.hudl.com/login";
@@ -54,24 +50,19 @@ describe("Test logging into Hudl", () => {
     await login(driver, "", "");
 
     // // Check Log In button is disabled after entering bad credentials
-    await checkElementState(driver, "#logIn", "disabled");
+    await checkElementIsVisible(driver, "logIn");
+    // driver.wait(until.elementIsDisabled("logIn"));
 
-    console.log("a");
+    await checkElementIsVisible(driver, "div.login-error.fade-in-expand");
 
-    // Check error container was triggered
-    await checkElementVisibility(
-      driver,
-      "div.login-error.fade-in-expand",
-      "visible"
-    );
-
-    console.log("b");
-
-    await checkElementText(
-      driver,
-      "div.login-error.fade-in-expand p",
-      "We didn't recognize that email and/or password. Need help?"
-    );
+    // const errorContainer = await driver.findElements(
+    //   By.css("div.login-error.fade-in-expand")
+    // );
+    //await driver.wait(until.elementIsVisible(errorContainer));
+    // elementTextIs(
+    //   errorContainer,
+    //   "We didn't recognize that email and/or password. "
+    // );
 
     // Check need help button
 

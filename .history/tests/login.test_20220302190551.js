@@ -2,22 +2,13 @@ const { expect } = require("@jest/globals");
 const { By } = require("selenium-webdriver");
 const { until } = require("selenium-webdriver");
 const webdriver = require("selenium-webdriver");
-const {
-  titleContains,
-  elementIsVisible,
-  elementTextIs,
-} = require("selenium-webdriver/lib/until");
+const { Driver } = require("selenium-webdriver/chrome");
+const { titleContains } = require("selenium-webdriver/lib/until");
 const {
   checkCurrentUrl,
   fillInputField,
   setMobileScreenSize,
   login,
-  checkElementIsVisible,
-  checkElementIsDisabled,
-  checkElementState,
-  checkElementVisibility,
-  getElementText,
-  checkElementText,
 } = require("./utilities");
 
 const loginUrl = "https://www.hudl.com/login";
@@ -44,38 +35,26 @@ describe("Test logging into Hudl", () => {
     await driver.close();
   });
 
-  test("Successful login with correct credentials, checking remember me ticked and unticked", async () => {});
-
-  test.only("Login validation testing, testing error message & need help (different scenarios)", async () => {
+  test.only("Login validation testing", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();
     await driver.get(loginUrl);
 
     // Login with blank email and password
     await login(driver, "", "");
 
-    // // Check Log In button is disabled after entering bad credentials
-    await checkElementState(driver, "#logIn", "disabled");
+    until.elementIsDisabled("logIn");
 
-    console.log("a");
-
-    // Check error container was triggered
-    await checkElementVisibility(
-      driver,
-      "div.login-error.fade-in-expand",
-      "visible"
+    await new Promise((r) => setTimeout(r, 6000));
+    let errorElement = await driver.wait(
+      until.elementIsVisible(
+        driver.findElement(By.className("login-error-container")),
+        15000
+      )
     );
 
-    console.log("b");
+    errorElement.getAttribute("value");
 
-    await checkElementText(
-      driver,
-      "div.login-error.fade-in-expand p",
-      "We didn't recognize that email and/or password. Need help?"
-    );
-
-    // Check need help button
-
-    // console.log(errorMsg);
+    console.log(errorMsg);
     // Check need help button
 
     // // Login with email and no password
@@ -88,8 +67,6 @@ describe("Test logging into Hudl", () => {
   });
 
   test("Test all buttons on login page to check they all work", async () => {});
-
-  test("Successful login with correct credentials, then test logging out is successful", async () => {});
 
   // MOBILE TESTS
 
