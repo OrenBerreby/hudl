@@ -7,6 +7,7 @@ const checkCurrentUrl = async (driver, expectedUrl) => {
   await driver.wait(until.urlIs(expectedUrl), 10000);
   let url = await driver.getCurrentUrl();
   expect(url).toEqual(expectedUrl);
+  console.log(url);
 };
 
 const fillInputField = async (driver, selector, selectorType, input) => {
@@ -170,15 +171,18 @@ const checkNeedHelpBtn = async (driver) => {
 
 const logout = async (driver, device) => {
   if (device == "mobile") {
+    console.log("1");
     await waitForElementAndClick(driver, "div.hui-secondarynav__open-menu");
     await waitForElementAndClick(
       driver,
       ".hui-globaladditionalitems.hui-globaladditionalitems--phone"
     );
   } else {
+    console.log("2");
     await waitForElementAndClick(driver, "div.hui-globalusermenu");
     await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
   }
+  console.log("b");
 };
 
 const loginBadCredentialsValidation = async (driver) => {

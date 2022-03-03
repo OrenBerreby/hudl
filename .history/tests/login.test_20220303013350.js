@@ -13,8 +13,8 @@ const {
 } = require("./utilities");
 
 const loginUrl = "https://www.hudl.com/login";
-const emailAddress = "";
-const password = "";
+const emailAddress = "orenbar34@gmail.com";
+const password = "Orenbar1997";
 
 describe("Test logging into Hudl", () => {
   // All tests must run within 180 seconds
