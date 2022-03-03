@@ -1,13 +1,33 @@
+const { expect } = require("@jest/globals");
 const { By } = require("selenium-webdriver");
+const { until } = require("selenium-webdriver");
+const { WebElement } = require("selenium-webdriver");
+const { Key } = require("selenium-webdriver");
 const webdriver = require("selenium-webdriver");
-const {} = require("selenium-webdriver/lib/until");
+const { Driver } = require("selenium-webdriver/chrome");
+const { checkedLocator } = require("selenium-webdriver/lib/by");
+const { Action } = require("selenium-webdriver/lib/input");
+const {
+  titleContains,
+  elementIsVisible,
+  elementTextIs,
+} = require("selenium-webdriver/lib/until");
 const {
   checkCurrentUrl,
+  fillInputField,
   setMobileScreenSize,
   login,
+  checkElementIsVisible,
+  checkElementIsDisabled,
+  checkElementState,
   checkElementVisibility,
+  getElementText,
+  waitForAndCheckElementText,
   checkFieldById,
   waitForElementAndClick,
+  checkErrorLoginContainer,
+  checkNeedHelpBtn,
+  waitForAndClickText,
   logout,
   loginBadCredentialsValidation,
 } = require("./utilities");
@@ -17,8 +37,8 @@ const emailAddress = "orenbar34@gmail.com";
 const password = "Orenbar1997";
 
 describe("Test logging into Hudl", () => {
-  // All tests must run within 180 seconds
-  jest.setTimeout(180000);
+  // Set tests time to 30 seconds
+  jest.setTimeout(300000);
 
   test("Successful login with correct credentials", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();
@@ -202,7 +222,7 @@ describe("Test logging into Hudl", () => {
     await driver.close();
   });
 
-  test("Test all buttons on login page to check they all work on mobile", async () => {
+  test.only("Test all buttons on login page to check they all work on mobile", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();
 
     // Check need help works

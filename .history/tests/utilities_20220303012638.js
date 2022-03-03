@@ -180,9 +180,9 @@ const logout = async (driver, device) => {
   } else {
     console.log("2");
     await waitForElementAndClick(driver, "div.hui-globalusermenu");
-    await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
   }
   console.log("b");
+  await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
 };
 
 const loginBadCredentialsValidation = async (driver) => {

@@ -132,7 +132,7 @@ const waitForAndCheckElementText = async (driver, cssSelector, desiredText) => {
   expect(textFound).toEqual(desiredText);
 };
 
-const waitForElementAndClick = async (driver, cssSelector) => {
+const waitForAndClick = async (driver, cssSelector) => {
   let element = By.css(cssSelector);
   await driver.wait(until.elementLocated(element, 10000));
   await driver.findElement(By.css(cssSelector)).click();
@@ -166,29 +166,12 @@ const checkErrorLoginContainer = async (driver) => {
 const checkNeedHelpBtn = async (driver) => {
   await checkElementState(driver, "#logIn", "disabled");
   await checkErrorLoginContainer(driver);
-  await waitForElementAndClick(driver, "div.login-error.fade-in-expand a");
+  await waitForAndClick(driver, "div.login-error.fade-in-expand a");
 };
 
-const logout = async (driver, device) => {
-  if (device == "mobile") {
-    console.log("1");
-    await waitForElementAndClick(driver, "div.hui-secondarynav__open-menu");
-    await waitForElementAndClick(
-      driver,
-      ".hui-globaladditionalitems.hui-globaladditionalitems--phone"
-    );
-  } else {
-    console.log("2");
-    await waitForElementAndClick(driver, "div.hui-globalusermenu");
-    await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
-  }
-  console.log("b");
-};
-
-const loginBadCredentialsValidation = async (driver) => {
-  await checkElementState(driver, "#logIn", "disabled");
-  await checkErrorLoginContainer(driver);
-  await checkNeedHelpBtn(driver);
+const logout = async (driver) => {
+  await waitForAndClick(driver, "div.hui-globalusermenu");
+  await waitForAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
 };
 
 exports.checkCurrentUrl = checkCurrentUrl;
@@ -199,9 +182,8 @@ exports.setMobileScreenSize = setMobileScreenSize;
 exports.checkElementVisibility = checkElementVisibility;
 exports.checkElementState = checkElementState;
 exports.waitForAndCheckElementText = waitForAndCheckElementText;
-exports.waitForElementAndClick = waitForElementAndClick;
+exports.waitForAndClick = waitForAndClick;
 exports.waitForAndClickText = waitForAndClickText;
 exports.checkErrorLoginContainer = checkErrorLoginContainer;
 exports.checkNeedHelpBtn = checkNeedHelpBtn;
 exports.logout = logout;
-exports.loginBadCredentialsValidation = loginBadCredentialsValidation;

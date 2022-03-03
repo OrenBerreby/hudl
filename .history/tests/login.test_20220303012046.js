@@ -1,13 +1,33 @@
+const { expect } = require("@jest/globals");
 const { By } = require("selenium-webdriver");
+const { until } = require("selenium-webdriver");
+const { WebElement } = require("selenium-webdriver");
+const { Key } = require("selenium-webdriver");
 const webdriver = require("selenium-webdriver");
-const {} = require("selenium-webdriver/lib/until");
+const { Driver } = require("selenium-webdriver/chrome");
+const { checkedLocator } = require("selenium-webdriver/lib/by");
+const { Action } = require("selenium-webdriver/lib/input");
+const {
+  titleContains,
+  elementIsVisible,
+  elementTextIs,
+} = require("selenium-webdriver/lib/until");
 const {
   checkCurrentUrl,
+  fillInputField,
   setMobileScreenSize,
   login,
+  checkElementIsVisible,
+  checkElementIsDisabled,
+  checkElementState,
   checkElementVisibility,
+  getElementText,
+  waitForAndCheckElementText,
   checkFieldById,
   waitForElementAndClick,
+  checkErrorLoginContainer,
+  checkNeedHelpBtn,
+  waitForAndClickText,
   logout,
   loginBadCredentialsValidation,
 } = require("./utilities");
@@ -17,8 +37,8 @@ const emailAddress = "orenbar34@gmail.com";
 const password = "Orenbar1997";
 
 describe("Test logging into Hudl", () => {
-  // All tests must run within 180 seconds
-  jest.setTimeout(180000);
+  // Set tests time to 30 seconds
+  jest.setTimeout(300000);
 
   test("Successful login with correct credentials", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();
@@ -141,8 +161,8 @@ describe("Test logging into Hudl", () => {
   test("Test logging into Hudl mobile device", async () => {
     // Open test in new window
     let driver = new webdriver.Builder().forBrowser("chrome").build();
-    await setMobileScreenSize(driver);
     await driver.get(loginUrl);
+    await setMobileScreenSize(driver);
 
     // Log user in successfully
     await login(driver, emailAddress, password);
@@ -152,10 +172,9 @@ describe("Test logging into Hudl", () => {
     await driver.close();
   });
 
-  test("Successful login with correct credentials, then test logging out is successful on mobile", async () => {
+  test.only("Successful login with correct credentials, then test logging out is successful on mobile", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();
     // Login successfully then logout
-    await setMobileScreenSize(driver);
     await driver.get(loginUrl);
     await waitForElementAndClick(driver, ".form__label--custom");
     await login(driver, emailAddress, password);
@@ -167,63 +186,14 @@ describe("Test logging into Hudl", () => {
     await driver.close();
   });
 
-  test("Login validation testing, testing error message & need help button (different scenarios) on mobile", async () => {
-    let driver = new webdriver.Builder().forBrowser("chrome").build();
+  // test("Test3", async () => {});
+  // test("Test4", async () => {});
+  // test("Test5", async () => {});
+  // test("Test6", async () => {});
+  // test("Test7", async () => {});
 
-    // Login with blank email and password
-    await setMobileScreenSize(driver);
-    await driver.get(loginUrl);
-    await login(driver, "", "");
-    await loginBadCredentialsValidation(driver);
-    // Check user email input field is empty as email was not entered at beginning
-    await checkFieldById(driver, "forgot-email", "");
-
-    // Login with email and no password
-    await driver.get(loginUrl);
-    await login(driver, emailAddress, "");
-    await loginBadCredentialsValidation(driver);
-    // Check that email is pre written
-    await checkFieldById(driver, "forgot-email", emailAddress);
-
-    // Login with valid email and invalid password
-    await driver.get(loginUrl);
-    await login(driver, emailAddress, "badPassword");
-    await loginBadCredentialsValidation(driver);
-    // Check that email is pre written
-    await checkFieldById(driver, "forgot-email", emailAddress);
-
-    // Login with password and no email
-    await driver.get(loginUrl);
-    await login(driver, "", password);
-    await loginBadCredentialsValidation(driver);
-    // Check that email is pre written
-    await checkFieldById(driver, "forgot-email", "");
-
-    await driver.close();
-  });
-
-  test("Test all buttons on login page to check they all work on mobile", async () => {
-    let driver = new webdriver.Builder().forBrowser("chrome").build();
-
-    // Check need help works
-    await setMobileScreenSize(driver);
-    await driver.get(loginUrl);
-    await waitForElementAndClick(driver, "#forgot-password-link");
-    await checkElementVisibility(driver, "#resetBtn", "visible");
-    await driver.get(loginUrl);
-
-    // Check remember me is visible
-    await checkElementVisibility(driver, ".form__label--custom", "visible");
-
-    // Check log in with organization button is visible
-    await checkElementVisibility(driver, "#logInWithOrganization", "visible");
-
-    // Check sign up is visible
-    await checkElementVisibility(driver, ".sign-up-trial a", "visible");
-
-    // Click arrow to go back to home page logged out
-    await waitForElementAndClick(driver, ".back-to-hudl");
-
-    await driver.close();
-  });
+  // // Close chrome after each test is run
+  // afterAll(async () => {
+  //   await driver.quit();
+  // });
 });

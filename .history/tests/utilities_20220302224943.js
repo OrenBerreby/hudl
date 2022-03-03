@@ -125,70 +125,11 @@ const checkElementState = async (driver, cssSelector, state) => {
     throw new Error("Element must be either 'enabled' or 'disabled'");
   }
 };
-const waitForAndCheckElementText = async (driver, cssSelector, desiredText) => {
+const checkElementText = async (driver, cssSelector, desiredText) => {
   let element = By.css(cssSelector);
   await driver.wait(until.elementLocated(element, 10000));
   const textFound = await driver.findElement(By.css(cssSelector)).getText();
   expect(textFound).toEqual(desiredText);
-};
-
-const waitForElementAndClick = async (driver, cssSelector) => {
-  let element = By.css(cssSelector);
-  await driver.wait(until.elementLocated(element, 10000));
-  await driver.findElement(By.css(cssSelector)).click();
-};
-
-const waitForAndClickText = async (driver, text) => {
-  let element = By.xpath(`//span[.='${text}']`);
-  await driver.wait(until.elementLocated(element, 10000));
-  await driver.findElement(By.xpath(`//span[.='${text}']`)).click();
-};
-
-const checkErrorLoginContainer = async (driver) => {
-  // Check error container was triggered, displays correct text and has need help button
-  await checkElementVisibility(
-    driver,
-    "div.login-error.fade-in-expand",
-    "visible"
-  );
-  await checkElementVisibility(
-    driver,
-    "div.login-error.fade-in-expand a",
-    "visible"
-  );
-  await waitForAndCheckElementText(
-    driver,
-    "div.login-error.fade-in-expand p",
-    "We didn't recognize that email and/or password. Need help?"
-  );
-};
-
-const checkNeedHelpBtn = async (driver) => {
-  await checkElementState(driver, "#logIn", "disabled");
-  await checkErrorLoginContainer(driver);
-  await waitForElementAndClick(driver, "div.login-error.fade-in-expand a");
-};
-
-const logout = async (driver, device) => {
-  if (device == "mobile") {
-    console.log("1");
-    await waitForElementAndClick(driver, "div.hui-secondarynav__open-menu");
-    await waitForElementAndClick(
-      driver,
-      ".hui-globaladditionalitems.hui-globaladditionalitems--phone"
-    );
-  } else {
-    console.log("2");
-    await waitForElementAndClick(driver, "div.hui-globalusermenu");
-    await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
-  }
-  console.log("b");
-};
-
-const loginBadCredentialsValidation = async (driver) => {
-  await checkElementState(driver, "#logIn", "disabled");
-  await checkErrorLoginContainer(driver);
-  await checkNeedHelpBtn(driver);
 };
 
 exports.checkCurrentUrl = checkCurrentUrl;
@@ -198,10 +139,4 @@ exports.login = login;
 exports.setMobileScreenSize = setMobileScreenSize;
 exports.checkElementVisibility = checkElementVisibility;
 exports.checkElementState = checkElementState;
-exports.waitForAndCheckElementText = waitForAndCheckElementText;
-exports.waitForElementAndClick = waitForElementAndClick;
-exports.waitForAndClickText = waitForAndClickText;
-exports.checkErrorLoginContainer = checkErrorLoginContainer;
-exports.checkNeedHelpBtn = checkNeedHelpBtn;
-exports.logout = logout;
-exports.loginBadCredentialsValidation = loginBadCredentialsValidation;
+exports.checkElementText = checkElementText;

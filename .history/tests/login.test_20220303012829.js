@@ -1,13 +1,33 @@
+const { expect } = require("@jest/globals");
 const { By } = require("selenium-webdriver");
+const { until } = require("selenium-webdriver");
+const { WebElement } = require("selenium-webdriver");
+const { Key } = require("selenium-webdriver");
 const webdriver = require("selenium-webdriver");
-const {} = require("selenium-webdriver/lib/until");
+const { Driver } = require("selenium-webdriver/chrome");
+const { checkedLocator } = require("selenium-webdriver/lib/by");
+const { Action } = require("selenium-webdriver/lib/input");
+const {
+  titleContains,
+  elementIsVisible,
+  elementTextIs,
+} = require("selenium-webdriver/lib/until");
 const {
   checkCurrentUrl,
+  fillInputField,
   setMobileScreenSize,
   login,
+  checkElementIsVisible,
+  checkElementIsDisabled,
+  checkElementState,
   checkElementVisibility,
+  getElementText,
+  waitForAndCheckElementText,
   checkFieldById,
   waitForElementAndClick,
+  checkErrorLoginContainer,
+  checkNeedHelpBtn,
+  waitForAndClickText,
   logout,
   loginBadCredentialsValidation,
 } = require("./utilities");
@@ -17,8 +37,8 @@ const emailAddress = "orenbar34@gmail.com";
 const password = "Orenbar1997";
 
 describe("Test logging into Hudl", () => {
-  // All tests must run within 180 seconds
-  jest.setTimeout(180000);
+  // Set tests time to 30 seconds
+  jest.setTimeout(300000);
 
   test("Successful login with correct credentials", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();
@@ -167,7 +187,7 @@ describe("Test logging into Hudl", () => {
     await driver.close();
   });
 
-  test("Login validation testing, testing error message & need help button (different scenarios) on mobile", async () => {
+  test.only("Login validation testing, testing error message & need help button (different scenarios)", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();
 
     // Login with blank email and password
@@ -202,28 +222,14 @@ describe("Test logging into Hudl", () => {
     await driver.close();
   });
 
-  test("Test all buttons on login page to check they all work on mobile", async () => {
-    let driver = new webdriver.Builder().forBrowser("chrome").build();
+  // test("Test3", async () => {});
+  // test("Test4", async () => {});
+  // test("Test5", async () => {});
+  // test("Test6", async () => {});
+  // test("Test7", async () => {});
 
-    // Check need help works
-    await setMobileScreenSize(driver);
-    await driver.get(loginUrl);
-    await waitForElementAndClick(driver, "#forgot-password-link");
-    await checkElementVisibility(driver, "#resetBtn", "visible");
-    await driver.get(loginUrl);
-
-    // Check remember me is visible
-    await checkElementVisibility(driver, ".form__label--custom", "visible");
-
-    // Check log in with organization button is visible
-    await checkElementVisibility(driver, "#logInWithOrganization", "visible");
-
-    // Check sign up is visible
-    await checkElementVisibility(driver, ".sign-up-trial a", "visible");
-
-    // Click arrow to go back to home page logged out
-    await waitForElementAndClick(driver, ".back-to-hudl");
-
-    await driver.close();
-  });
+  // // Close chrome after each test is run
+  // afterAll(async () => {
+  //   await driver.quit();
+  // });
 });

@@ -169,26 +169,9 @@ const checkNeedHelpBtn = async (driver) => {
   await waitForElementAndClick(driver, "div.login-error.fade-in-expand a");
 };
 
-const logout = async (driver, device) => {
-  if (device == "mobile") {
-    console.log("1");
-    await waitForElementAndClick(driver, "div.hui-secondarynav__open-menu");
-    await waitForElementAndClick(
-      driver,
-      ".hui-globaladditionalitems.hui-globaladditionalitems--phone"
-    );
-  } else {
-    console.log("2");
-    await waitForElementAndClick(driver, "div.hui-globalusermenu");
-    await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
-  }
-  console.log("b");
-};
-
-const loginBadCredentialsValidation = async (driver) => {
-  await checkElementState(driver, "#logIn", "disabled");
-  await checkErrorLoginContainer(driver);
-  await checkNeedHelpBtn(driver);
+const logout = async (driver) => {
+  await waitForElementAndClick(driver, "div.hui-globalusermenu");
+  await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
 };
 
 exports.checkCurrentUrl = checkCurrentUrl;
@@ -204,4 +187,3 @@ exports.waitForAndClickText = waitForAndClickText;
 exports.checkErrorLoginContainer = checkErrorLoginContainer;
 exports.checkNeedHelpBtn = checkNeedHelpBtn;
 exports.logout = logout;
-exports.loginBadCredentialsValidation = loginBadCredentialsValidation;

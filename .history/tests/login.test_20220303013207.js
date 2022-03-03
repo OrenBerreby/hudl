@@ -17,8 +17,8 @@ const emailAddress = "orenbar34@gmail.com";
 const password = "Orenbar1997";
 
 describe("Test logging into Hudl", () => {
-  // All tests must run within 180 seconds
-  jest.setTimeout(180000);
+  // Set tests time to 30 seconds
+  jest.setTimeout(300000);
 
   test("Successful login with correct credentials", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();

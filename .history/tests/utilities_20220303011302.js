@@ -169,20 +169,9 @@ const checkNeedHelpBtn = async (driver) => {
   await waitForElementAndClick(driver, "div.login-error.fade-in-expand a");
 };
 
-const logout = async (driver, device) => {
-  if (device == "mobile") {
-    console.log("1");
-    await waitForElementAndClick(driver, "div.hui-secondarynav__open-menu");
-    await waitForElementAndClick(
-      driver,
-      ".hui-globaladditionalitems.hui-globaladditionalitems--phone"
-    );
-  } else {
-    console.log("2");
-    await waitForElementAndClick(driver, "div.hui-globalusermenu");
-    await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
-  }
-  console.log("b");
+const logout = async (driver) => {
+  await waitForElementAndClick(driver, "div.hui-globalusermenu");
+  await waitForElementAndClick(driver, "[data-qa-id=webnav-usermenu-logout]");
 };
 
 const loginBadCredentialsValidation = async (driver) => {
