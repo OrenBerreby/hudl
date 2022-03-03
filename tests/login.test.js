@@ -13,8 +13,10 @@ const {
 } = require("./utilities");
 
 const loginUrl = "https://www.hudl.com/login";
-const emailAddress = "";
-const password = "";
+// const emailAddress = "Replace with email address";
+// const password = "Replace with valid password";
+const emailAddress = "orenbar34@gmail.com";
+const password = "Orenbar1997";
 
 describe("Test logging into Hudl", () => {
   // All tests must run within 180 seconds
@@ -26,6 +28,7 @@ describe("Test logging into Hudl", () => {
 
     // Log user in successfully
     await login(driver, emailAddress, password);
+
     // Check logging in was successful
     await checkCurrentUrl(driver, "https://www.hudl.com/home");
 
@@ -41,13 +44,13 @@ describe("Test logging into Hudl", () => {
     await login(driver, emailAddress, password);
     await logout(driver);
 
-    // Check log in button appears to make sure we are logged out
+    // Check log in button appears to make sure we are logged out to make sure logout was a success
     await checkElementVisibility(driver, "[data-qa-id=login]", "visible");
 
     await driver.close();
   });
 
-  test("Login validation testing, testing error message & need help button (different scenarios)", async () => {
+  test.only("Login validation testing, testing error message & need help button (different scenarios)", async () => {
     let driver = new webdriver.Builder().forBrowser("chrome").build();
 
     // Login with blank email and password

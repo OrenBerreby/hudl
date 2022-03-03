@@ -1,6 +1,5 @@
 const { By, Key } = require("selenium-webdriver");
 const { until } = require("selenium-webdriver");
-const { Driver } = require("selenium-webdriver/chrome");
 
 const checkCurrentUrl = async (driver, expectedUrl) => {
   // Get current url and check it is the url we expect (timeout after 10 seconds if not found)
@@ -74,7 +73,7 @@ const login = async (driver, emailAddress, password) => {
   await fillInputField(driver, "password", "id", password);
 
   // Click the login button
-  await driver.findElement(By.id("logIn")).sendKeys(Key.RETURN);
+  await waitForElementAndClick(driver, "#logIn");
 };
 
 const setMobileScreenSize = async (driver) => {
